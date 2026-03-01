@@ -54,7 +54,7 @@ const DashboardPage = () => {
                             <div className={`p-3 rounded-2xl ${stat.bg} ${stat.color}`}>
                                 <stat.icon size={24} />
                             </div>
-                            <div className={`flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-full ${stat.isUp ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
+                            <div className={`flex items-center gap-1 text-xs font-black px-2.5 py-1 rounded-full ${stat.isUp ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
                                 {stat.isUp ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                                 {stat.trend}
                             </div>
@@ -203,7 +203,7 @@ const DashboardPage = () => {
                                     </div>
                                 </div>
                                 <span className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider ${item.status === '접수' ? 'bg-danger/10 text-danger' :
-                                        item.status === '진행 중' ? 'bg-warning/10 text-warning' : 'bg-success/10 text-success'
+                                    item.status === '진행 중' ? 'bg-warning/10 text-warning' : 'bg-success/10 text-success'
                                     }`}>
                                     {item.status}
                                 </span>
