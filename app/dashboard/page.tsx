@@ -41,9 +41,12 @@ const DashboardPage = () => {
 
     return (
         <div className="space-y-8 animate-in fade-in duration-700">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 relative">
                 <h2 className="text-3xl font-bold tracking-tight">대시보드</h2>
                 <p className="text-secondary text-sm">오늘의 부동산 관리 현황을 요약해 드립니다.</p>
+                <span className="absolute top-0 right-0 px-2 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-bold rounded-lg border border-amber-500/20">
+                    ⚠️ 시뮬레이션 데이터 (가상)
+                </span>
             </div>
 
             {/* 상단 통계 카드 */}

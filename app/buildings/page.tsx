@@ -64,9 +64,13 @@ const BuildingsPage = () => {
         <div className="space-y-8 animate-in fade-in duration-700">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">건물 관리</h2>
-                    <p className="text-secondary mt-1">소유하신 건물의 수입 및 점유 현황입니다.</p>
-                </div>
+                    <div>
+                        <h2 className="text-3xl font-bold tracking-tight">건물 관리</h2>
+                        <p className="text-secondary mt-1">소유하신 건물의 수입 및 점유 현황입니다.</p>
+                        <span className="inline-block mt-2 px-2 py-0.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[9px] font-bold rounded border border-amber-500/20">
+                            ⚠️ 시뮬레이션 데이터 (가상)
+                        </span>
+                    </div>        </div>
                 <button
                     onClick={() => setIsModalOpen(true)}
                     className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20"
