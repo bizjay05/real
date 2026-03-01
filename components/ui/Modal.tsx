@@ -50,7 +50,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
                         className="relative w-full max-w-lg glass border rounded-3xl shadow-2xl overflow-hidden bg-card"
                         onClick={(e: React.MouseEvent) => e.stopPropagation()}
                     >
-                        <div className="p-6 border-b border-white/10 flex items-center justify-between bg-primary/5">
+                        <div className="p-6 border-b flex items-center justify-between bg-primary/5">
                             <h3 className="text-xl font-bold">{title}</h3>
                             <button
                                 onClick={onClose}

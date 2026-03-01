@@ -95,8 +95,8 @@ const NoticePage = () => {
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all font-bold text-sm ${activeTab === tab.id
-                                            ? 'bg-primary text-white shadow-md'
-                                            : 'text-secondary hover:bg-secondary/10'
+                                        ? 'bg-primary text-white shadow-md'
+                                        : 'text-secondary hover:bg-secondary/10'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
@@ -178,7 +178,7 @@ const NoticePage = () => {
                     </div>
 
                     {/* 더보기 버튼 */}
-                    <button className="w-full py-4 glass rounded-3xl border border-dashed border-white/20 text-xs font-black text-secondary hover:bg-white/5 transition-all uppercase tracking-widest">
+                    <button className="w-full py-4 glass rounded-3xl border border-dashed text-xs font-black text-secondary hover:bg-card/20 transition-all uppercase tracking-widest">
                         이전 게시글 불러오기
                     </button>
                 </div>
@@ -203,7 +203,7 @@ const NoticePage = () => {
                             <label className="block text-[11px] font-black text-secondary uppercase tracking-widest mb-2">고정 여부</label>
                             <div className="flex items-center gap-4 py-3">
                                 <label className="flex items-center gap-2 cursor-pointer font-bold text-sm">
-                                    <input type="checkbox" className="w-4 h-4 rounded border-white/10" />
+                                    <input type="checkbox" className="w-4 h-4 rounded border-primary/20" />
                                     최상단 고정
                                 </label>
                             </div>

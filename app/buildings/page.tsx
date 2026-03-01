@@ -10,7 +10,9 @@ import {
     Plus,
     Search,
     Filter,
-    ArrowRight
+    ArrowRight,
+    FileText,
+    Download
 } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -177,8 +179,52 @@ const BuildingsPage = () => {
                     </button>
                 </form>
             </Modal>
+            {/* 전자 서류 보관소 섹션 */}
+            <div className="glass p-8 rounded-[2rem] border shadow-lg overflow-hidden group">
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-3">
+                        <div className="p-3 rounded-2xl bg-accent/10 text-accent">
+                            <FileText size={24} />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold tracking-tight">전자 서류 보관소</h3>
+                            <p className="text-[11px] text-secondary font-medium">건물별 주요 계약서 및 인허가 서류 관리</p>
+                        </div>
+                    </div>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 rounded-xl text-xs font-black transition-all">
+                        <Plus size={14} />
+                        <span>서류 업로드</span>
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                        { name: '임대차계약서_역삼.pdf', type: 'PDF', size: '2.4MB', date: '2024.02.15', building: '강남 프라임' },
+                        { name: '소방시설안전검사_서초.pdf', type: 'PDF', size: '1.1MB', date: '2024.01.20', building: '서초 메이플' },
+                        { name: '하자보수영수증_IT센터.jpg', type: 'IMG', size: '4.8MB', date: '2024.02.28', building: '신사 엠파이어' },
+                        { name: '정기관리계약서_전체.pdf', type: 'PDF', size: '1.5MB', date: '2023.12.01', building: '전체' },
+                    ].map((doc, i) => (
+                        <div key={i} className="p-5 rounded-3xl border bg-secondary/5 hover:bg-secondary/10 transition-all cursor-pointer group/doc">
+                            <div className="flex items-start justify-between mb-4">
+                                <div className={`p-2 rounded-lg ${doc.type === 'PDF' ? 'bg-danger/10 text-danger' : 'bg-primary/10 text-primary'}`}>
+                                    <FileText size={18} />
+                                </div>
+                                <button className="opacity-0 group-hover/doc:opacity-100 transition-opacity p-1.5 hover:bg-card rounded-lg">
+                                    <Download size={14} />
+                                </button>
+                            </div>
+                            <h4 className="text-sm font-bold truncate mb-1" title={doc.name}>{doc.name}</h4>
+                            <div className="flex items-center justify-between text-[10px] text-secondary font-medium">
+                                <span>{doc.building}</span>
+                                <span>{doc.date}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
+
 
 export default BuildingsPage;

@@ -92,7 +92,7 @@ const PaymentsPage = () => {
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="border-b border-white/10 bg-secondary/5">
+                                    <tr className="border-b bg-secondary/5">
                                         <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider">세입자 / 건물</th>
                                         <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider">납부 금액</th>
                                         <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider">결제일 / 방법</th>
@@ -100,7 +100,7 @@ const PaymentsPage = () => {
                                         <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider"></th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-white/5">
+                                <tbody className="divide-y">
                                     {transactions.map((tx) => (
                                         <tr key={tx.id} className="hover:bg-secondary/5 transition-colors">
                                             <td className="px-6 py-5">
@@ -116,7 +116,7 @@ const PaymentsPage = () => {
                                             </td>
                                             <td className="px-6 py-5">
                                                 <span className={`px-3 py-1 rounded-full text-xs font-bold ${tx.status === '입금완료' ? 'bg-success/10 text-success' :
-                                                        tx.status === '미납' ? 'bg-warning/10 text-warning' : 'bg-danger/10 text-danger'
+                                                    tx.status === '미납' ? 'bg-warning/10 text-warning' : 'bg-danger/10 text-danger'
                                                     }`}>
                                                     {tx.status}
                                                 </span>
@@ -147,7 +147,7 @@ const PaymentsPage = () => {
                                 </div>
                             </div>
 
-                            <div className="pt-4 border-t border-white/10 space-y-4">
+                            <div className="pt-4 border-t space-y-4">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="w-2 h-2 rounded-full bg-success" />
@@ -181,7 +181,7 @@ const PaymentsPage = () => {
                         <p className="text-xs text-secondary leading-relaxed">
                             지난달 대비 공실률이 2% 감소하며 총 수입이 4.5% 증가했습니다. 미납금이 높은 호실에 대해 자동 알림 전송을 권장합니다.
                         </p>
-                        <button className="w-full mt-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold hover:bg-white/10 transition-colors">
+                        <button className="w-full mt-4 py-2 rounded-xl bg-card/10 border text-xs font-bold hover:bg-card/20 transition-colors">
                             AI 통계 보기
                         </button>
                     </div>

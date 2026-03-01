@@ -21,8 +21,8 @@ const Sidebar = () => {
     { icon: CreditCard, label: '수납 현황', href: '/payments' },
     { icon: Receipt, label: '세금 관리', href: '/taxes' },
     { icon: TrendingUp, label: '시세 관리', href: '/market-prices' },
-    { icon: Bell, label: '공지사항', href: '/notice' },
     { icon: Wrench, label: '유지보수', href: '/maintenance' },
+    { icon: Bell, label: '공지사항', href: '/notice' },
   ];
 
   return (
@@ -46,7 +46,7 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t">
         <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-danger hover:bg-danger/10 transition-colors">
           <LogOut size={20} />
           <span className="font-medium">로그아웃</span>

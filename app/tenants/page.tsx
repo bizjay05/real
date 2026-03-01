@@ -130,7 +130,7 @@ const TenantsPage = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="border-b border-white/10 bg-secondary/5">
+                            <tr className="border-b bg-secondary/5">
                                 <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider">세입자 정보</th>
                                 <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider">소속 호수</th>
                                 <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider">계약 기간</th>
@@ -139,7 +139,7 @@ const TenantsPage = () => {
                                 <th className="px-6 py-4 text-xs font-bold text-secondary uppercase tracking-wider"></th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y">
                             {tenants.map((tenant) => (
                                 <tr key={tenant.id} className="hover:bg-secondary/5 transition-colors">
                                     <td className="px-6 py-5">

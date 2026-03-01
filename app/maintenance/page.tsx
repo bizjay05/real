@@ -94,7 +94,7 @@ const MaintenancePage = () => {
             </div>
 
             {/* 필터 탭 */}
-            <div className="flex border-b border-white/10 gap-8 overflow-x-auto pb-1">
+            <div className="flex border-b gap-8 overflow-x-auto pb-1">
                 {['전체', '대기 중', '진행 중', '완료됨'].map((tab) => (
                     <button
                         key={tab}
@@ -145,7 +145,7 @@ const MaintenancePage = () => {
                             </div>
                         </div>
 
-                        <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
+                        <div className="mt-8 pt-6 border-t flex items-center justify-between">
                             <div className="flex items-center gap-2 text-primary">
                                 <MessageSquare size={16} />
                                 <span className="text-xs font-bold">댓글 2개</span>
