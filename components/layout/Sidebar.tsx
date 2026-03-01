@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { 
-  LayoutDashboard, 
-  Building2, 
-  Users, 
-  CreditCard, 
-  Wrench, 
-  Settings, 
-  LogOut 
+import {
+  LayoutDashboard,
+  Building2,
+  Users,
+  CreditCard,
+  Wrench,
+  Settings,
+  LogOut
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -21,12 +21,12 @@ const Sidebar = () => {
 
   return (
     <div className="fixed left-0 top-0 h-screen w-64 glass border-r flex flex-col z-50">
-      <div className="p-6">
+      <Link href="/dashboard" className="p-6 block hover:opacity-80 transition-opacity">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          RealEstate
+          BuildingWorks
         </h1>
-      </div>
-      
+      </Link>
+
       <nav className="flex-1 px-4 py-4 space-y-2">
         {menuItems.map((item) => (
           <Link

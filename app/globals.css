@@ -8,24 +8,27 @@
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
-  
+
   --color-card: #ffffff;
   --color-card-dark: #1e293b;
-  
+
   --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 :root {
-  --background: #f8fafc;
+  --background: #f1f5f9;
+  /* Slightly darker background to make white cards pop */
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
-  --border: #e2e8f0;
+  --border: #cbd5e1;
+  /* Darker border for better definition */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
+    --background: #020617;
+    /* Deep midnight blue for dark mode */
     --foreground: #f8fafc;
     --card: #1e293b;
     --card-foreground: #f8fafc;
@@ -42,11 +45,10 @@ body {
 
 @layer components {
   .glass {
-    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-white/20 dark:border-slate-800/20;
+    @apply bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm ring-1 ring-black/5 dark:ring-white/5;
   }
-  
+
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-premium hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/30;
   }
 }
-

@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import {
     Building2,
     MapPin,
@@ -10,8 +12,12 @@ import {
     Filter,
     ArrowRight
 } from 'lucide-react';
+import Modal from '@/components/ui/Modal';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const BuildingsPage = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const buildings = [
         {
             id: 1,
@@ -45,17 +51,54 @@ const BuildingsPage = () => {
         }
     ];
 
+    const chartData = [
+        { name: '10월', revenue: 4200 },
+        { name: '11월', revenue: 4500 },
+        { name: '12월', revenue: 4300 },
+        { name: '1월', revenue: 4800 },
+        { name: '2월', revenue: 5100 },
+        { name: '3월', revenue: 5400 },
+    ];
+
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="space-y-8 animate-in fade-in duration-700">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight">건물 관리</h2>
-                    <p className="text-secondary mt-1">소유하신 {buildings.length}개의 건물을 관리하고 있습니다.</p>
+                    <p className="text-secondary mt-1">소유하신 건물의 수입 및 점유 현황입니다.</p>
                 </div>
-                <button className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20"
+                >
                     <Plus size={20} />
                     <span>새 건물 등록</span>
                 </button>
+            </div>
+
+            {/* 수익 통계 그래프 */}
+            <div className="glass p-6 rounded-3xl border">
+                <h3 className="text-xl font-bold mb-6">최근 6개월 수익 추이 (만원)</h3>
+                <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={chartData}>
+                            <defs>
+                                <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff10" />
+                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff' }}
+                                itemStyle={{ color: '#3b82f6' }}
+                            />
+                            <Area type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
 
             {/* 필터 및 검색 바 */}
@@ -64,89 +107,72 @@ const BuildingsPage = () => {
                     <Search size={20} className="text-secondary" />
                     <input
                         type="text"
-                        placeholder="건물명, 주소 또는 유형으로 검색..."
+                        placeholder="건물명으로 검색..."
                         className="bg-transparent border-none outline-none text-sm w-full"
                     />
                 </div>
-                <button className="glass flex items-center gap-2 px-6 py-3 rounded-2xl border font-medium hover:bg-secondary/5 transition-colors">
-                    <Filter size={20} />
-                    <span>필터</span>
-                </button>
             </div>
 
             {/* 건물 카드 리스트 */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                {/* Previous cards implementation remains same */}
                 {buildings.map((building) => (
-                    <div key={building.id} className="glass rounded-3xl border overflow-hidden card-hover flex flex-col md:flex-row h-full">
+                    <div key={building.id} className="glass rounded-3xl border overflow-hidden card-hover flex flex-col md:flex-row">
                         <div className="md:w-48 h-48 md:h-auto relative overflow-hidden">
-                            <img
-                                src={building.image}
-                                alt={building.name}
-                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                            />
-                            <div className="absolute top-3 left-3 px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-                                {building.type}
-                            </div>
+                            <img src={building.image} className="w-full h-full object-cover" alt="" />
                         </div>
-
-                        <div className="flex-1 p-6 flex flex-col justify-between">
-                            <div>
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-xl font-bold">{building.name}</h3>
-                                    <button className="p-1 rounded-full hover:bg-secondary/10 transition-colors text-secondary">
-                                        <MoreVertical size={20} />
-                                    </button>
+                        <div className="flex-1 p-6">
+                            <h3 className="text-xl font-bold">{building.name}</h3>
+                            <p className="text-sm text-secondary flex items-center gap-1 mt-1"><MapPin size={14} /> {building.address}</p>
+                            <div className="mt-4 flex gap-4">
+                                <div className="text-center bg-secondary/5 p-2 rounded-xl flex-1">
+                                    <p className="text-xs text-secondary">점유율</p>
+                                    <p className="text-sm font-bold text-primary">{building.occupancy}%</p>
                                 </div>
-                                <div className="flex items-center gap-1 text-sm text-secondary mb-4">
-                                    <MapPin size={14} />
-                                    <span>{building.address}</span>
+                                <div className="text-center bg-secondary/5 p-2 rounded-xl flex-1">
+                                    <p className="text-xs text-secondary">호수</p>
+                                    <p className="text-sm font-bold">{building.units}개</p>
                                 </div>
-
-                                <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-2 rounded-lg bg-secondary/10 text-secondary">
-                                            <Layers size={18} />
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-secondary">층수</p>
-                                            <p className="text-sm font-semibold">{building.floors.split('/')[0]}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                                            <Users size={18} />
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-secondary">총 호수</p>
-                                            <p className="text-sm font-semibold">{building.units}개 호실</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center text-sm">
-                                    <span className="font-medium">점유율</span>
-                                    <span className={`font-bold ${building.occupancy === 100 ? 'text-success' : 'text-primary'}`}>
-                                        {building.occupancy}%
-                                    </span>
-                                </div>
-                                <div className="w-full bg-secondary/10 h-2 rounded-full overflow-hidden">
-                                    <div
-                                        className={`h-full rounded-full transition-all duration-1000 ${building.occupancy === 100 ? 'bg-success' : 'bg-primary'
-                                            }`}
-                                        style={{ width: `${building.occupancy}%` }}
-                                    />
-                                </div>
-                                <button className="w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-xl border border-primary/20 text-primary font-bold hover:bg-primary/5 transition-colors text-sm">
-                                    상세 세부정보 보기
-                                    <ArrowRight size={16} />
-                                </button>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {/* 등록 모달 */}
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="새 건물 등록"
+            >
+                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">건물 이름</label>
+                        <input type="text" className="w-full bg-secondary/5 border rounded-xl px-4 py-3 outline-none focus:ring-2 ring-primary/20" placeholder="예: 강남 프라임 타워" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium mb-1">건물 유형</label>
+                            <select className="w-full bg-secondary/5 border rounded-xl px-4 py-3 outline-none">
+                                <option>상업용</option>
+                                <option>주거용</option>
+                                <option>오피스텔</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">총 층수</label>
+                            <input type="number" className="w-full bg-secondary/5 border rounded-xl px-4 py-3 outline-none" placeholder="15" />
+                        </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">상세 주소</label>
+                        <textarea className="w-full bg-secondary/5 border rounded-xl px-4 py-3 outline-none h-24" placeholder="지번 또는 도로명 주소 입력"></textarea>
+                    </div>
+                    <button className="w-full bg-primary text-white py-4 rounded-xl font-bold mt-4 shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all">
+                        등록하기
+                    </button>
+                </form>
+            </Modal>
         </div>
     );
 };
