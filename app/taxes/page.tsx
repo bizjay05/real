@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import {
     Receipt,
     TrendingDown,
@@ -9,10 +11,66 @@ import {
     FileText,
     Search,
     Filter,
-    Info
+    Info,
+    RefreshCw
 } from 'lucide-react';
 
 const TaxesPage = () => {
+    // 세법 자동 업데이트 로직 (3개월 주기)
+    const getUpdateDatesInitial = () => {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth(); // 0-11
+
+        // 업데이트 주기: 1월, 4월, 7월, 10월 (3개월 단위)
+        const updateMonths = [0, 3, 6, 9];
+        let lastUpdateMonth = updateMonths[0];
+
+        for (let i = updateMonths.length - 1; i >= 0; i--) {
+            if (currentMonth >= updateMonths[i]) {
+                lastUpdateMonth = updateMonths[i];
+                break;
+            }
+        }
+
+        const lastUpdate = new Date(currentYear, lastUpdateMonth, 1);
+        const nextUpdate = new Date(currentYear, lastUpdateMonth + 3, 1);
+
+        const formatDate = (date: Date) => {
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.01`;
+        };
+
+        return {
+            last: formatDate(lastUpdate),
+            next: formatDate(nextUpdate)
+        };
+    };
+
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [updateDates, setUpdateDates] = useState(getUpdateDatesInitial());
+    const [updateCount, setUpdateCount] = useState(0);
+
+    const handleManualUpdate = () => {
+        if (updateCount >= 3) {
+            alert("⚠️ 일일 업데이트 한도(3회)를 모두 사용했습니다. 내일부터 다시 업데이트 가능합니다.");
+            return;
+        }
+
+        setIsUpdating(true);
+        // 실제 서버 업데이트 및 최신 세법 API 호출 시뮬레이션
+        setTimeout(() => {
+            const now = new Date();
+            const today = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+
+            setUpdateDates(prev => ({
+                ...prev,
+                last: today + ` (수동 업데이트 완료 - 오늘 ${updateCount + 1}/3회)`
+            }));
+            setUpdateCount(prev => prev + 1);
+            setIsUpdating(false);
+        }, 1500);
+    };
+
     // 실제 한국 세법 기준 통계 데이터 (예시 수치)
     const taxSummary = [
         { label: '5월 종합소득세 추계', value: '2,840만원', icon: TrendingDown, color: 'text-primary', bg: 'bg-primary/10', info: '작년 임대소득 기준 예상치' },
@@ -100,7 +158,27 @@ const TaxesPage = () => {
                     <div className="glass rounded-3xl border shadow-sm overflow-hidden">
                         <div className="p-6 border-b border-white/5 bg-secondary/5 flex justify-between items-center">
                             <h3 className="text-lg font-bold">2024년 세무 이력 및 예정 내역</h3>
-                            <span className="text-[10px] font-black text-secondary bg-secondary/10 px-2 py-1 rounded-lg italic">KB 세법 기준 업데이트 완료</span>
+                            <div className="flex items-center gap-4">
+                                <button
+                                    onClick={handleManualUpdate}
+                                    disabled={isUpdating}
+                                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all ${isUpdating
+                                        ? 'bg-primary/20 text-primary cursor-not-allowed'
+                                        : 'bg-primary text-white hover:bg-primary-dark shadow-lg shadow-primary/20'
+                                        }`}
+                                >
+                                    <RefreshCw size={14} className={isUpdating ? 'animate-spin' : ''} />
+                                    <span>{isUpdating ? '업데이트 중...' : '법률 최신 업데이트'}</span>
+                                </button>
+                                <div className="flex flex-col items-end gap-1">
+                                    <span className="text-[10px] font-black text-primary bg-primary/5 px-2 py-1 rounded-lg border border-primary/10">
+                                        최근 법률 업데이트: {updateDates.last}
+                                    </span>
+                                    <span className="text-[9px] font-bold text-secondary animate-pulse">
+                                        다음 정기 업데이트 예정: {updateDates.next}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
